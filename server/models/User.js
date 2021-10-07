@@ -10,11 +10,21 @@ const User = db.define('User', {
     },
     email: {
         type: Sequelize.TEXT,
-        allowNull: false
+        allowNull: false,
+        validate: {
+            isEmail: true,
+            notNull: true,
+            notEmpty: true
+        }
     },
     password: {
         type: Sequelize.TEXT,
-        allowNull: false
+        allowNull: false,
+        validate: {
+            notNull: true,
+            notEmpty: true,
+            min: 5
+        }
     }
 });
 

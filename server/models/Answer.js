@@ -4,7 +4,11 @@ const db = require('../config/database');
 const Answer = db.define('Answer', {
     description: {
         type: Sequelize.TEXT,
-        allowNull: false
+        allowNull: false,
+        validate: {
+            notEmpty: true,
+            notNull: true
+        }
     },
     date: {
         type: Sequelize.DATE,

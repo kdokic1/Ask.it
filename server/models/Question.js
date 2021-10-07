@@ -4,7 +4,11 @@ const db = require('../config/database');
 const Question = db.define('Question', {
     title: {
         type: Sequelize.TEXT,
-        allowNull: false
+        allowNull: false,
+        validate: {
+            notEmpty: true,
+            notNull: true
+        }
     },
     description: {
         type: Sequelize.TEXT,

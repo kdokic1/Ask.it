@@ -3,17 +3,22 @@ const router = Router();
 const bcrypt = require('bcrypt');
 const jwtGenerator = require('../utils/jwtGenerator');
 const User = require('../models/User');
+const validator = require('../middleware/validator');
+const cookieParser = require('cookie-parser');
 
+
+router.use(cookieParser());
 //signup
 
-router.post("/signup", async (req, res) => {
+router.post("/signup", validator, async (req, res) => {
     try {
         const {firstName, lastName, email, password} = req.body;
-
+        let error = { email: '', password: ''};
         //does user already exist
         const user = await User.findOne({where: {email: email}});
         if (user) {
-            return res.status(401).send("User already exists");
+            error['email'] = 'User already exists.';
+            return res.status(401).send(error);
         }
     
         //bcrypting password
@@ -27,7 +32,8 @@ router.post("/signup", async (req, res) => {
         //generating jwt
         const token = jwtGenerator(newUser.id);
 
-        res.json({token});
+        res.cookie('jwt', token, { httpOnly:true});
+        res.status(201).json({ user: newUser.id, jwt: token });
     } catch (err) {
         console.log(err);
         res.status(500).send("Server error");
@@ -35,23 +41,30 @@ router.post("/signup", async (req, res) => {
 });
 
 //login
-router.post("/login", async(req, res) => {
+router.post("/login", validator, async(req, res) => {
     try {
         const {email, password} = req.body;
-
+        let error = { email: '', password: ''};
         //checking if user exists
         const user = await User.findOne({where: {email: email}});
         if (!user) {
-            return res.status(401).json("Email is incorrect"); //vidjeti da li ovo ispisati ovdje
+            error['email'] = "Sorry, we can't find an account with this email address. Please try again or create a new account.";
+            return res.status(401).json(error);
+
         }
         //password validation
         const validPassword = await bcrypt.compare(password, user.password);
         if(!validPassword) {
-            return res.status(401).json("Password is incorrect");
+            error['password'] = 'Password is incorrect.';
+            return res.status(401).json(error);
         }
+
+
         //generating token
         const token = jwtGenerator(user.id);
-        res.json({token});
+        
+        res.cookie('jwt', token, { httpOnly:true});
+        res.status(201).json({ user: user.id, jwt: token });
 
     } catch (err) {
         console.log(err);
