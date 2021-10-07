@@ -18,7 +18,7 @@ router.post("/signup", validator, async (req, res) => {
         const user = await User.findOne({where: {email: email}});
         if (user) {
             error['email'] = 'User already exists.';
-            return res.status(401).send(error);
+            return res.status(401).send({errors: error});
         }
     
         //bcrypting password
@@ -33,7 +33,7 @@ router.post("/signup", validator, async (req, res) => {
         const token = jwtGenerator(newUser.id);
 
         res.cookie('jwt', token, { httpOnly:true});
-        res.status(201).json({ user: newUser.id, jwt: token });
+        res.status(201).json({ user: newUser.id, token: token});
     } catch (err) {
         console.log(err);
         res.status(500).send("Server error");
@@ -49,14 +49,14 @@ router.post("/login", validator, async(req, res) => {
         const user = await User.findOne({where: {email: email}});
         if (!user) {
             error['email'] = "Sorry, we can't find an account with this email address. Please try again or create a new account.";
-            return res.status(401).json(error);
+            return res.status(401).json({errors: error});
 
         }
         //password validation
         const validPassword = await bcrypt.compare(password, user.password);
         if(!validPassword) {
             error['password'] = 'Password is incorrect.';
-            return res.status(401).json(error);
+            return res.status(401).json({errors: error});
         }
 
 
@@ -64,12 +64,18 @@ router.post("/login", validator, async(req, res) => {
         const token = jwtGenerator(user.id);
         
         res.cookie('jwt', token, { httpOnly:true});
-        res.status(201).json({ user: user.id, jwt: token });
+        res.status(201).json({ user: user.id});
 
     } catch (err) {
         console.log(err);
         res.status(500).send("Server error");
     }
+});
+
+router.get("/logout", async(req, res) => {
+    res.cookie('jwt', '', { maxAge: 1 });
+    //res.redirect('/')
+    res.send("---LOGOUT---")
 });
 
 module.exports = router;

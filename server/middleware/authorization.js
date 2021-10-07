@@ -1,20 +1,23 @@
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
-module.exports = async (req, res, next) => {
-    try {
-        const jwtToken = req.header("token");
+const requireAuth = (req, res, next) => {
+    const token = req.cookies.jwt;
 
-        if(!jwt) {
-            return res.status(403).json("Not Authorize");
-        }
-        const payload = jwt.verify(jwtToken, process.env.jwtSecret);
-
-        req.user = payload.user;
-        
-
-    } catch (error) {
-        console.error(error);
-        return res.status(403).json("Not Authorize");
+    //check if json web token exists and is verified
+    if(token) {
+        jwt.verify(token, process.env.jwtSecret, (err, decodedToken) => {
+            if(err) {
+                console.log(err.message);
+                res.send("neki error, nema tokena, opet idemo na login page");
+            } else {
+                console.log("dobila si decoded token :  ----- " + decodedToken);
+                next();
+            }
+        });
+    } else {
+        res.send("nismo ulogovani, nema tokena");
     }
 };
+
+module.exports = { requireAuth };

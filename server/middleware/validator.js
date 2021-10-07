@@ -31,7 +31,7 @@ module.exports = function (req, res, next) {
         }
 
         if(error['email'] != '' || error['password'] != '') {
-            return res.status(401).json(error);
+            return res.status(401).json({errors: error});
         }
     }
 
