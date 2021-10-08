@@ -2,21 +2,21 @@ const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
 const requireAuth = (req, res, next) => {
-    const token = req.cookies.jwt;
+    const jwtToken = req.header("token");
 
     //check if json web token exists and is verified
-    if(token) {
-        jwt.verify(token, process.env.jwtSecret, (err, decodedToken) => {
+    if(jwtToken) {
+        jwt.verify(jwtToken, process.env.jwtSecret, (err, decodedToken) => {
             if(err) {
                 console.log(err.message);
-                res.send("neki error, nema tokena, opet idemo na login page");
+                res.send("token is not valid");
             } else {
-                console.log("dobila si decoded token :  ----- " + decodedToken);
+                res.locals.id = decodedToken.id;
                 next();
             }
         });
     } else {
-        res.send("nismo ulogovani, nema tokena");
+        res.send("user is not logged in");
     }
 };
 

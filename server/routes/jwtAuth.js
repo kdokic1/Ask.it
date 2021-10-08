@@ -4,10 +4,7 @@ const bcrypt = require('bcrypt');
 const jwtGenerator = require('../utils/jwtGenerator');
 const User = require('../models/User');
 const validator = require('../middleware/validator');
-const cookieParser = require('cookie-parser');
 
-
-router.use(cookieParser());
 //signup
 
 router.post("/signup", validator, async (req, res) => {
@@ -32,8 +29,7 @@ router.post("/signup", validator, async (req, res) => {
         //generating jwt
         const token = jwtGenerator(newUser.id);
 
-        res.cookie('jwt', token, { httpOnly:true});
-        res.status(201).json({ user: newUser.id, token: token});
+        res.status(201).json({token});
     } catch (err) {
         console.log(err);
         res.status(500).send("Server error");
@@ -63,19 +59,11 @@ router.post("/login", validator, async(req, res) => {
         //generating token
         const token = jwtGenerator(user.id);
         
-        res.cookie('jwt', token, { httpOnly:true});
-        res.status(201).json({ user: user.id});
-
+        res.status(201).json({token});
     } catch (err) {
         console.log(err);
         res.status(500).send("Server error");
     }
-});
-
-router.get("/logout", async(req, res) => {
-    res.cookie('jwt', '', { maxAge: 1 });
-    //res.redirect('/')
-    res.send("---LOGOUT---")
 });
 
 module.exports = router;

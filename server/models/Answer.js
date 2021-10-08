@@ -14,6 +14,6 @@ const Answer = db.define('Answer', {
         type: Sequelize.DATE,
         allowNull: false
     }
-});
+}, {underscored: true});
 
 module.exports = Answer;

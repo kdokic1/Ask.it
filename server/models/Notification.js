@@ -6,6 +6,6 @@ const Notification = db.define('Notification', {
         type: Sequelize.BOOLEAN
     },
     
-});
+}, {underscored: true});
 
 module.exports = Notification;

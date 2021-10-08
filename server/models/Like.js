@@ -6,6 +6,6 @@ const Like = db.define('Like', {
         type: Sequelize.BOOLEAN
     },
     
-});
+}, {underscored: true});
 
 module.exports = Like;
