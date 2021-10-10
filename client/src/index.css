@@ -16,19 +16,28 @@
 
 .navbar .links {
   margin-left: auto;
+  margin-right: 30px;
 }
 
 .navbar a {
   margin-left: 16px;
   text-decoration: none;
-  padding: 6px;
+  padding: 15px;
+  font-weight: bold;
+  font-size: 13pt;
   
 }
 
-.logo {
-  height: 45px;
-  width: 110px;
+.navbar a:hover {
+  color: #3aafa9;
 }
+
+.logo {
+  margin-left: 30px;
+  height: 40px;
+  width: 100px;
+}
+
 
 .welcome {
   margin: auto;
@@ -69,18 +78,7 @@
 }
 
 .btn {
-  border-radius: 20px;
-  border-width: 1px;
-  background-color: #2b7a78;
-  width: 100px;
-  height: 35px;
-  color: #ffffff;
-  font-weight: bold;
-  border-color: #7a7f80;
   margin-left: 10px;
   margin-top: 20px;
 }
 
-.btn:hover {
-  background-color: #26726f;
-}

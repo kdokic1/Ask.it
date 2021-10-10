@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import logo from '../images/askitLogo.png';
-
+import { useHistory } from 'react-router-dom';
 
 const Navbar = ({isAuthenticated, setAuth}) => {
 
@@ -9,14 +9,17 @@ const Navbar = ({isAuthenticated, setAuth}) => {
         localStorage.removeItem("token");
     };
 
+    const history = useHistory();
+    const handleHomeClick = () => history.push('/');
+
     return ( 
         <nav className="navbar">
-            <img className="logo" src={logo} alt="Logo" />
+            <img className="logo" src={logo} alt="Logo" onClick={handleHomeClick} />
             <div className="links">
-                <Link to="/">Home</Link>
+                <Link to="/home">Home</Link>
                 {!isAuthenticated && <Link to="/login">Login</Link>}
                 {!isAuthenticated && <Link to="/signup">Signup</Link>}
-                {isAuthenticated && <Link to="/login" onClick={handleLogout}>Logout</Link>}
+                {isAuthenticated && <Link to="/" onClick={handleLogout}>Logout</Link>}
             </div>
         </nav>
      );

@@ -1,0 +1,85 @@
+.container {
+    display: flex;
+    flex-direction: row;
+    position: absolute;
+    box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+    margin-left: 30%;
+    margin-top: 2%;
+}
+
+.illustration {
+    background-color: #5dcec8;
+    width: 300px;
+    height: 550px;
+}
+
+.formContainer {
+    background-color: #1f343b;
+    width: 300px;
+    height: 550px;
+}
+
+.userData {
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: solid;
+    border-width:1px;
+    background-color: transparent;
+    color: white;
+    border-color: #515a5e;
+    width: 70%;
+    margin: auto;
+    margin-top: 7px;
+}
+
+.userData:focus {
+    outline: none;
+}
+
+label {
+    color: white;
+    width: 70%;
+    margin: auto;
+    padding-top: 25px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+
+.title {
+      color: white;
+      font-size: 17pt;
+      width: 70%;
+      margin: auto;
+}
+
+.btn {
+      margin-left: 15%;
+      margin-top: 10%;
+}
+
+.loginImg {
+    width: 100%;
+    margin-top: 30%;
+}
+
+.redirect {
+    color: white;
+    text-decoration: none;
+    width: 70%;
+    margin: auto;
+    padding-top: 5%;
+    color: rgb(132, 154, 160);
+}
+
+.error {
+    padding-top: 7px;
+    color: rgb(255, 64, 64);
+    width: 70%;
+    margin: auto;
+    font-size: 9pt;
+}

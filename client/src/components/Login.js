@@ -1,5 +1,10 @@
 import { useState } from 'react';
-import { useHistory } from 'react-router-dom'
+import { useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import '../style/login.css';
+import '../style/btn.css';
+import '../style/form.css';
+import illustration from '../images/illustration.png';
 
 const Login = ({setAuth}) => {
     const [email, setEmail] = useState('');
@@ -27,7 +32,7 @@ const Login = ({setAuth}) => {
             } else {
                 localStorage.setItem("token", data.token);
                 setAuth(true);
-                history.push('/');
+                history.push('/home');
             }
         } catch (error) {
             console.log(error);
@@ -35,29 +40,37 @@ const Login = ({setAuth}) => {
     }
 
     return ( 
-        <div className="login">
-            <h2>Login</h2>
-            <form onSubmit={handleSubmit}>
-                <label>Email:</label>
-                <input
-                    type="email"
-                    placeholder="email"
-                    required
-                    value={email}
-                    onChange = {(e) => setEmail(e.target.value)}
-                />
-                <p>{emailError}</p>
-                <label>Password:</label>
-                <input
-                    type="password"
-                    placeholder="password"
-                    required
-                    value={password}
-                    onChange = {(e) => setPassword(e.target.value)}
-                />
-                <p>{passwordError}</p>
-                <button>Login</button>
-            </form>
+        <div className="container">
+            <div className="illustration">
+                <img src={illustration} className="loginImg"/>
+            </div>
+            <div className="formContainer">
+                <form onSubmit={handleSubmit} className="loginForm">
+                    <p className="title">LOGIN</p>
+                    <label>Email:</label>
+                    <input
+                        type="email"
+                        placeholder="enter your email address"
+                        required
+                        value={email}
+                        onChange = {(e) => setEmail(e.target.value)}
+                        className="userData"
+                    />
+                    <p className="error">{emailError}</p>
+                    <label>Password:</label>
+                    <input
+                        type="password"
+                        placeholder="enter your password"
+                        required
+                        value={password}
+                        onChange = {(e) => setPassword(e.target.value)}
+                        className="userData"
+                    />
+                    <p className="error">{passwordError}</p>
+                    <button className="btn">Login</button>
+                    <Link to="/signup" className="redirect">Don't have an account?</Link>
+                </form>
+            </div>
         </div>
      );
 }

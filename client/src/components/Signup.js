@@ -1,5 +1,10 @@
 import { useState } from 'react';
 import { useHistory } from 'react-router-dom'
+import { Link } from 'react-router-dom';
+import '../style/form.css';
+import '../style/btn.css';
+import '../style/signup.css';
+import illustration from '../images/illustration.png';
 
 const Signup = ({setAuth}) => {
     const [firstName, setFirstName] = useState('');
@@ -15,7 +20,7 @@ const Signup = ({setAuth}) => {
             setPasswordError("Password should contain at least 5 characters.")
         else
             setPasswordError('');
-            
+
         setPassword(e.target.value);
     }
 
@@ -41,50 +46,60 @@ const Signup = ({setAuth}) => {
             } else {
                 localStorage.setItem("token", data.token);
                 setAuth(true);
-                history.push('/');
+                history.push('/home');
             }
         } catch (error) {
             console.log(error);
         }
     }
     return ( 
-        <div className="signup">
-            <h2>Signup</h2>
-            <form onSubmit={handleSubmit}>
-                <label>First name:</label>
-                <input
-                    type="text"
-                    placeholder="first name"
-                    value={firstName}
-                    onChange = {(e) => setFirstName(e.target.value)}
-                />
-                <label>Last name:</label>
-                <input
-                    type="text"
-                    placeholder="last name"
-                    value={lastName}
-                    onChange = {(e) => setLastName(e.target.value)}
-                />
-                <label>Email:</label>
-                <input
-                    type="email"
-                    placeholder="email"
-                    required
-                    value={email}
-                    onChange = {(e) => setEmail(e.target.value)}
-                />
-                <p>{emailError}</p>
-                <label>Password:</label>
-                <input
-                    type="password"
-                    placeholder="password"
-                    required
-                    value={password}
-                    onChange = {(e) => onPasswordChange(e)}
-                />
-                <p>{passwordError}</p>
-                <button>Login</button>
-            </form>
+        <div className="container">
+            <div className="illustration">
+                <img src={illustration} className="loginImg"/>
+            </div>
+            <div className="formContainer">
+                <form onSubmit={handleSubmit} className="signupForm">
+                    <p className="title">SIGNUP</p>
+                    <label>First name:</label>
+                    <input
+                        type="text"
+                        placeholder="enter your first name"
+                        value={firstName}
+                        onChange = {(e) => setFirstName(e.target.value)}
+                        className="userData"
+                    />
+                    <label>Last name:</label>
+                    <input
+                        type="text"
+                        placeholder="enter your last name"
+                        value={lastName}
+                        onChange = {(e) => setLastName(e.target.value)}
+                        className="userData"
+                    />
+                    <label>Email:</label>
+                    <input
+                        type="email"
+                        placeholder="enter your email address"
+                        required
+                        value={email}
+                        onChange = {(e) => setEmail(e.target.value)}
+                        className="userData"
+                    />
+                    <p className="error">{emailError}</p>
+                    <label>Password:</label>
+                    <input
+                        type="password"
+                        placeholder="enter your password"
+                        required
+                        value={password}
+                        onChange = {(e) => onPasswordChange(e)}
+                        className="userData"
+                    />
+                    <p className="error">{passwordError}</p>
+                    <button className="btn">Signup</button>
+                    <Link to="/login" className="redirect">Already have an account?</Link>
+                </form>
+            </div>
         </div>
      );
 }

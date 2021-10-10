@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import logo from '../images/asking.jpg';
 import { useHistory } from 'react-router-dom';
+import '../style/btn.css';
 
 const Welcome = () => {
     const history = useHistory();
