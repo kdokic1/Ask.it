@@ -36,6 +36,8 @@ app.use("/auth", require("./routes/jwtAuth"));
 app.use("/app", requireAuth, require("./routes/protectedRoutes"));
 app.use("/", require("./routes/publicRoutes"));
 
+app.get("/", (req, res) => { res.send("page")})
+
 app.listen(PORT, () => {
     console.log(`server has started on port ${PORT}`);
 });
