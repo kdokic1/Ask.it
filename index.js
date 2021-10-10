@@ -28,7 +28,7 @@ app.use(cookieParser());
 if(process.env.NODE_ENV === "production") {
     //server static content
     //npm run build
-    app.user(express.static(path.join(__dirname, "client/build")));
+    app.use(express.static(path.join(__dirname, "client/build")));
 }
 
 //ROUTES
