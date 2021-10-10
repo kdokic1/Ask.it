@@ -4,7 +4,7 @@ const cors = require("cors");
 const { requireAuth } = require("./middleware/authorization");
 const cookieParser = require('cookie-parser');
 const path = require("path");
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 8000;
 
 //associations
 const User = require('./models/User');
