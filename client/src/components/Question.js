@@ -1,9 +1,17 @@
 import '../style/question.css'
+import { useHistory } from 'react-router-dom';
+
 
 const Question = ({question}) => {
     var date = new Date(question.date);
+    const history = useHistory();
+
+    const handleQuestionDetails = () => {
+        history.push('/');
+    }
+
     return ( 
-        <div className="questionContainer">
+        <div className="questionContainer" onClick={handleQuestionDetails}>
             <div className="dateAndBy">
                 <p>{date.toLocaleDateString()} {date.getHours()}:{date.getMinutes()}</p>
                 <p>{question.userEmail}</p>

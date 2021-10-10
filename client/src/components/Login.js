@@ -67,7 +67,7 @@ const Login = ({setAuth}) => {
                         className="userData"
                     />
                     <p className="error">{passwordError}</p>
-                    <button className="btn">Login</button>
+                    <button className="btn loginBtn">Login</button>
                     <Link to="/signup" className="redirect">Don't have an account?</Link>
                 </form>
             </div>

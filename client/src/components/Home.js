@@ -1,9 +1,15 @@
 import { useState, useEffect } from 'react';
 import '../style/home.css'
 import Question from '../components/Question';
+import '../style/btn.css'
 
 const Home = () => {
     const [questions, setQuestions] = useState([]);
+    const [numOfDispleyedQuest, setNumOfDispleyedQuest] = useState(6);
+
+    const loadMoreHandler = () => {
+        setNumOfDispleyedQuest(numOfDispleyedQuest + 5);
+    }
 
     useEffect(() => {
         async function fetchQuestions() {
@@ -18,6 +24,7 @@ const Home = () => {
         }
         fetchQuestions();
     }, []);
+
     return ( 
         <div className="home">
 
@@ -28,11 +35,12 @@ const Home = () => {
            </div>
            <div className="questionsContainer">
                <p className="allQuestions">All Questions</p>
-                {questions.map((quest) => (
+                {questions.slice(0, numOfDispleyedQuest).map((quest) => (
                     <div key={quest.id}>
-                        <Question question={quest}/>
+                        <Question question={quest} />
                     </div>
                 ))}
+                <button onClick={loadMoreHandler} className="btn loadMoreBtn">load more...</button>
            </div>
            <div className="hotQuestionsContainer">
                 <p>
