@@ -3,6 +3,8 @@ const app = express();
 const cors = require("cors");
 const { requireAuth } = require("./middleware/authorization");
 const cookieParser = require('cookie-parser');
+const path = require("path");
+const PORT = process.env.PORT || 5000;
 
 //associations
 const User = require('./models/User');
@@ -15,16 +17,25 @@ User.hasMany(Question)
 User.hasMany(Answer)
 Question.hasMany(Answer)
 
+//process.env.PORT
+//process.env.NODE_ENV => production or undefined
+ 
 //middleware
 app.use(cors());
 app.use(express.json());
 app.use(cookieParser());
+
+if(process.env.NODE_ENV === "production") {
+    //server static content
+    //npm run build
+    app.user(express.static(path.join(__dirname, "client/build")));
+}
 
 //ROUTES
 app.use("/auth", require("./routes/jwtAuth"));
 app.use("/app", requireAuth, require("./routes/protectedRoutes"));
 app.use("/", require("./routes/publicRoutes"));
 
-app.listen(5000, () => {
-    console.log("server has started on port 5000");
+app.listen(PORT, () => {
+    console.log(`server has started on port ${PORT}`);
 });

@@ -13,9 +13,13 @@ const Home = () => {
 
     useEffect(() => {
         async function fetchQuestions() {
-            const response = await fetch('http://localhost:5000/questions', {
+            const response = await fetch('/questions', {
                 method: "GET",
-                headers: { token: localStorage.token },
+                headers: { 
+                    token: localStorage.token,
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                 }, 
             });
             if(response.ok){
                 const fetchedQuestions = await response.json();

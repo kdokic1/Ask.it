@@ -1,7 +1,20 @@
 const { Sequelize, Model, DataTypes} = require('sequelize')
 
-const sequelize = new Sequelize('postgres://postgres:uquahlahying@localhost:5432/askdb', {define: {
+const devConfig = {
+    connectionString: 'postgres://postgres:uquahlahying@localhost:5432/askdb'
+};
+
+const proConfig = {
+    connectionString: process.env.DATABASE_URL
+};
+
+
+
+const sequelize = new Sequelize(process.env.NODE_ENV === "production" ?  proConfig.connectionString : devConfig.connectionString, {define: {
     timestamps: false
 }});
+
+
+
 
 module.exports = sequelize;
