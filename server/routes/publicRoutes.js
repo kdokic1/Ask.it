@@ -9,17 +9,78 @@ const Answer = require('../models/Answer');
 const sortJsonArray = require('sort-json-array');
 const Like = require('../models/Like');
 
-//signup
+const getNumberOfQuestionAnswers  = async (id) => {
+    const numberOfAnswers = await Answer.count({
+        where: {
+            question_id: id
+        }
+    });
+    return numberOfAnswers;
+}
+
+const getNumberOfLikes = async (id) => {
+    const numberOfLikes = await Like.count({
+        where: {
+            question_id: id,
+            is_like: true
+        }
+    });
+    return numberOfLikes;
+}
+
+const getNumberOfDislikes = async (id) => {
+    const numberOfDislikes = await Like.count({
+        where: {
+            question_id: id,
+            is_like: false
+        }
+    });
+    return numberOfDislikes;
+}
+
+const getUserEmail = async (id) => {
+    const user = await User.findOne({
+        where: {
+            id: id
+        }
+    });
+
+    return user.email
+}
+
 
 router.get("/questions", async (req, res) => {
     try {
-
+        const result = [];
         const questions = await Question.findAll({
             order: [
                 ['date', 'DESC']
             ]
         });
-        res.json(questions);
+
+        for(var i = 0; i < questions.length; i++) {
+            
+            const numberOfAnswers = await getNumberOfQuestionAnswers(questions[i].id);
+            const numberOfLikes = await getNumberOfLikes(questions[i].id);
+            const numberOfDislikes = await getNumberOfDislikes(questions[i].id);
+            const userEmail = await getUserEmail(questions[i].UserId);
+
+            var data = {
+                id: questions[i].id,
+                userId: questions[i].userId,
+                title: questions[i].title,
+                description: questions[i].description,
+                date: questions[i].date,
+                numberOfLikes: numberOfLikes,
+                numberOfDislikes: numberOfDislikes,
+                numberOfAnswers: numberOfAnswers,
+                userEmail: userEmail
+            }
+    
+            result.push(data);
+        }
+
+        res.json(result);
 
     } catch (err) {
         console.log(err);
@@ -67,12 +128,7 @@ router.get("/topThreeQuestions", async (req, res) => {
         var topThreeQuestions = [];
 
         for(var i = 0; i < questions.length; i++) {
-            const numberOfLikes = await Like.count({
-                where: {
-                    question_id: questions[i].id,
-                    is_like: true
-                }
-            });
+            const numberOfLikes = await getNumberOfLikes(questions[i].id);
 
             var data = {
                 id: questions[i].id,
@@ -117,12 +173,7 @@ router.get("/questionAnswers/:questionId", async (req, res) => {
 
 router.get("/countLikes/:questionId", async (req, res) => {
     try {
-        const numberOfLikes = await Like.count({
-            where: {
-                question_id: req.params.questionId,
-                is_like: true
-            }
-        });
+        const numberOfLikes = await getNumberOfLikes(req.params.questionId);
         
         res.json(numberOfLikes);
 
@@ -134,12 +185,7 @@ router.get("/countLikes/:questionId", async (req, res) => {
 
 router.get("/countDislikes/:questionId", async (req, res) => {
     try {
-        const numberOfDislikes = await Like.count({
-            where: {
-                question_id: req.params.questionId,
-                is_like: false
-            }
-        });
+        const numberOfDislikes = await getNumberOfDislikes(req.params.questionId);
         
         res.json(numberOfDislikes);
 

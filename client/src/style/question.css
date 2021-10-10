@@ -1,0 +1,41 @@
+.questionContainer {
+    display: flex;
+    flex-direction: row;
+    width: 90%;
+    margin:auto;
+    background-color: white;
+    margin-top: 20px;
+    height: 100px;
+    align-items: center;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+
+.dateAndBy, .statistics {
+    display: flex;
+    flex-direction: column;
+    padding-left: 30px;
+    font-size: 10pt;
+}
+
+.dateAndBy {
+    width: 17%;
+}
+
+.dateAndBy p {
+    margin-top: 10px;
+}
+
+.questTitle {
+    width: 38%;
+    margin-left: 5%;
+    color: rgb(54, 168, 168);
+    font-weight: bold;
+}
+
+.allQuestions {
+    margin-top: 20px;
+    margin-left: 40%;
+    font-size: 23pt;
+    color: rgb(68, 117, 113);
+    font-weight: bold;
+}

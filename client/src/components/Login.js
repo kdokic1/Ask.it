@@ -42,7 +42,7 @@ const Login = ({setAuth}) => {
     return ( 
         <div className="container">
             <div className="illustration">
-                <img src={illustration} className="loginImg"/>
+                <img src={illustration} alt="Illustration" className="loginImg"/>
             </div>
             <div className="formContainer">
                 <form onSubmit={handleSubmit} className="loginForm">

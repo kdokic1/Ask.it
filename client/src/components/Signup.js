@@ -28,7 +28,7 @@ const Signup = ({setAuth}) => {
         e.preventDefault();
         const user = { firstName, lastName, email, password };
 
-        if (emailError != '' || passwordError != '')
+        if (emailError !== '' || passwordError !== '')
             return;
         
         try {
@@ -55,7 +55,7 @@ const Signup = ({setAuth}) => {
     return ( 
         <div className="container">
             <div className="illustration">
-                <img src={illustration} className="loginImg"/>
+                <img src={illustration} alt="Illustration" className="loginImg"/>
             </div>
             <div className="formContainer">
                 <form onSubmit={handleSubmit} className="signupForm">
