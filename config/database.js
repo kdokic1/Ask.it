@@ -14,10 +14,8 @@ const sequelize = new Sequelize(process.env.NODE_ENV === "production" ?  proConf
     define: {
     timestamps: false
     },
-    dialectOptions: {
-        ssl: {
-            rejectUnauthorized: false
-        }
+    ssl: {
+        rejectUnauthorized: false
     }
 });
 
