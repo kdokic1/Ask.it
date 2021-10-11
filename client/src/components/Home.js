@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import '../style/home.css'
 import Question from '../components/Question';
+import TopUsers from './topUsers';
 import '../style/btn.css'
 
 const Home = () => {
@@ -11,8 +12,9 @@ const Home = () => {
         setNumOfDispleyedQuest(numOfDispleyedQuest + 5);
     }
 
+
     useEffect(() => {
-        async function fetchQuestions() {
+        const fetchData = async () => {
             const response = await fetch('/questions', {
                 method: "GET",
                 headers: { 
@@ -26,16 +28,15 @@ const Home = () => {
                 setQuestions(fetchedQuestions);
             }
         }
-        fetchQuestions();
+        fetchData();
     }, []);
 
     return ( 
         <div className="home">
 
            <div className="topPeopleContainer">
-               <p>
-                   ovdje ce biti ljudi
-               </p>
+               <p className="topThreeUsers">TOP THREE USERS</p>
+                <TopUsers />
            </div>
            <div className="questionsContainer">
                <p className="allQuestions">All Questions</p>

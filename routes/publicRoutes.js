@@ -102,6 +102,7 @@ router.get("/topThreePeople", async (req, res) => {
             });
 
             var data = {
+                id: people[i].id,
                 firstName: people[i].first_name,
                 lastName: people[i].last_name,
                 email: people[i].email,

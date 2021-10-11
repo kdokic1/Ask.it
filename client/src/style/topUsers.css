@@ -1,0 +1,34 @@
+.topUsers {
+    margin-top: 40px;
+    margin-left: 23%;
+    display: flex;
+    flex-direction: row;
+}
+
+.threeUsers, .placesImages {
+    display: flex;
+    flex-direction: column;
+}
+
+.placeImg {
+    margin-bottom: 60px;
+    width: 45%;
+}
+
+.user {
+    
+    margin-bottom: 80px;
+    margin-right: 10px;
+}
+
+.user .topEmail {
+    color: rgb(103, 160, 182);
+    font-weight: 700;
+    font-size: 15pt;
+    text-shadow: 3px 2px 3px rgba(142, 167, 190, 0.2);
+}
+
+.user .topAns {
+    font-size: 10pt;
+}
+

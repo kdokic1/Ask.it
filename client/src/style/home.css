@@ -8,12 +8,24 @@
     flex-direction: column;
     padding-bottom: 30px;
     width: 50%;
-    margin:auto;
+}
+.topPeopleContainer {
+    width: 25%;
 }
 
 .loadMoreBtn {
     margin-left: 40%;
     margin-bottom: 10%;
+}
+
+.topThreeUsers {
+    font-family: 'Roboto', sans-serif;
+    margin-top: 80px;
+    margin-left: 20%;
+    font-size: 18pt;
+    color: rgb(155, 165, 162);
+    letter-spacing: 2.5px;
+    font-weight: bold;
 }
 
 
