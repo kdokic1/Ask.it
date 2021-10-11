@@ -7,7 +7,7 @@ const Question = ({question}) => {
     const history = useHistory();
 
     const handleQuestionDetails = () => {
-        history.push('/');
+        history.push(`/question/${question.id}`);
     }
 
     return ( 

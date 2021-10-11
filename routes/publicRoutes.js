@@ -196,5 +196,37 @@ router.get("/countDislikes/:questionId", async (req, res) => {
     }
 });
 
+router.get("/questionDetails/:questionId", async (req, res) => {
+    try {
+        const question = await Question.findOne({
+            where: {
+                id: req.params.questionId
+            }
+        });
+
+        const userEmail = await getUserEmail(req.params.questionId);
+        const numberOfAnswers = await getNumberOfQuestionAnswers(req.params.questionId);
+        const numberOfLikes = await getNumberOfLikes(req.params.questionId);
+        const numberOfDislikes = await getNumberOfDislikes(req.params.questionId);
+
+        var data = {
+            id: question.id,
+            userId: question.userId,
+            title: question.title,
+            description: question.description,
+            date: question.date,
+            numberOfLikes: numberOfLikes,
+            numberOfDislikes: numberOfDislikes,
+            numberOfAnswers: numberOfAnswers,
+            userEmail: userEmail
+        }
+        
+        res.json(data);
+    } catch (err) {
+        console.log(err);
+        res.status(500).send("Server error");
+    }
+});
+
 
 module.exports = router;

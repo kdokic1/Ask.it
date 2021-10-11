@@ -3,6 +3,7 @@ import Home from './components/Home';
 import Login from './components/Login';
 import Signup from './components/Signup';
 import Welcome from './components/Welcome';
+import QuestionWithAnswers from './components/QuestionWithAnswers';
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 import { useState } from 'react';
 
@@ -58,6 +59,14 @@ function App() {
                 ) : (
                   <Redirect to="/" />
                 )
+              }
+            />
+
+            <Route
+              exact
+              path="/question/:questionId"
+              render={props => 
+                  <QuestionWithAnswers isAuthenticated={isAuthenticated} setAuth={setAuth}/>
               }
             />
         
