@@ -18,14 +18,28 @@
     margin-bottom: 10%;
 }
 
-.topThreeUsers {
+.topThreeUsers, .topThreeQuestions {
     font-family: 'Roboto', sans-serif;
-    margin-top: 80px;
-    margin-left: 20%;
     font-size: 18pt;
     color: rgb(155, 165, 162);
     letter-spacing: 2.5px;
     font-weight: bold;
 }
 
+.topThreeUsers {
+    margin-top: 80px;
+    margin-left: 20%;
+}
+
+.topThreeQuestions {
+    margin-top: 70px;
+    display: flex;
+    flex-direction: row;
+    margin-left: 15%;
+    align-items: center;
+}
+
+.hotQuestionsContainer {
+    width: 25%;
+}
 

@@ -143,7 +143,7 @@ router.get("/topThreeQuestions", async (req, res) => {
             topThreeQuestions.push(data);
         }
         sortJsonArray(topThreeQuestions, 'numberOfLikes', 'des')
-        var result = topThreeQuestions.slice(0, 3);
+        var result = topThreeQuestions.slice(0, 5);
         
         res.json(result);
 

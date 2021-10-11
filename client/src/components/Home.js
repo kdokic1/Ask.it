@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react';
-import '../style/home.css'
+import '../style/home.css';
 import Question from '../components/Question';
 import TopUsers from './topUsers';
-import '../style/btn.css'
+import '../style/btn.css';
+import HotQuestions from './HotQuestions';
+import Fire from '../images/fire.png';
 
 const Home = () => {
     const [questions, setQuestions] = useState([]);
@@ -48,9 +50,8 @@ const Home = () => {
                 <button onClick={loadMoreHandler} className="btn loadMoreBtn">load more...</button>
            </div>
            <div className="hotQuestionsContainer">
-                <p>
-                    ovdje ce biti top pitanja
-                </p>
+                <p className="topThreeQuestions"><img src={Fire} alt="Hot"/>QUESTIONS</p>
+                <HotQuestions />
            </div>
 
         </div>
