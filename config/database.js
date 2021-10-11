@@ -7,14 +7,13 @@ const devConfig = {
 const proConfig = {
     connectionString: process.env.DATABASE_URL,
     ssl: {
-        require: true,
         rejectUnauthorized: false
     }
 };
 
 
 
-const sequelize = new Sequelize(process.env.NODE_ENV === "production" ?  proConfig.connectionString : devConfig.connectionString, {
+const sequelize = new Sequelize(process.env.NODE_ENV.trim() === "production" ?  proConfig.connectionString : devConfig.connectionString, {
     define: {
     timestamps: false
     }
