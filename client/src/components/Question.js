@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom';
 
 
 const Question = ({question}) => {
+
     var date = new Date(question.date);
     const history = useHistory();
 

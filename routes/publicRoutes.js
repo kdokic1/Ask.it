@@ -163,8 +163,23 @@ router.get("/questionAnswers/:questionId", async (req, res) => {
                 ['date', 'DESC']
             ]
         });
+
+        var result = [];
+
+        for(var i = 0; i < answers.length; i++) {
+            const email = await getUserEmail(answers[i].UserId);
+            var data = {
+                "id": answers[i].id,
+                "description": answers[i].description,
+                "date": answers[i].date,
+                "UserId": answers[i].UserId,
+                "QuestionId": answers[i].QuestionId,
+                "userEmail": email
+            }
+            result.push(data);
+        }
         
-        res.json(answers);
+        res.json(result);
 
     } catch (err) {
         console.log(err);
