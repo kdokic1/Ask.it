@@ -5,6 +5,7 @@ import TopUsers from './topUsers';
 import '../style/btn.css';
 import HotQuestions from './HotQuestions';
 import Fire from '../images/fire.png';
+import {getAllQuestions} from '../helpers/questionHelper';
 
 const Home = () => {
     const [questions, setQuestions] = useState([]);
@@ -15,22 +16,9 @@ const Home = () => {
     }
 
 
-    useEffect(() => {
-        const fetchData = async () => {
-            const response = await fetch('/questions', {
-                method: "GET",
-                headers: { 
-                    token: localStorage.token,
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
-                 }, 
-            });
-            if(response.ok){
-                const fetchedQuestions = await response.json();
-                setQuestions(fetchedQuestions);
-            }
-        }
-        fetchData();
+    useEffect(async () => {
+        const allQuestions = await getAllQuestions();
+        setQuestions(allQuestions);
     }, []);
 
     return ( 

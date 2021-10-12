@@ -48,6 +48,23 @@ const getUserEmail = async (id) => {
     return user.email
 }
 
+const getUserEmailForQuestion = async (questionId) => {
+    const question = await Question.findOne({
+        where: {
+            id: questionId
+        }
+    });
+
+
+    const user = await User.findOne({
+        where: {
+            id: question.UserId
+        }
+    });
+
+    return user.email;
+}
+
 
 router.get("/questions", async (req, res) => {
     try {
@@ -218,8 +235,7 @@ router.get("/questionDetails/:questionId", async (req, res) => {
                 id: req.params.questionId
             }
         });
-
-        const userEmail = await getUserEmail(req.params.questionId);
+        const userEmail = await getUserEmailForQuestion(req.params.questionId);
         const numberOfAnswers = await getNumberOfQuestionAnswers(req.params.questionId);
         const numberOfLikes = await getNumberOfLikes(req.params.questionId);
         const numberOfDislikes = await getNumberOfDislikes(req.params.questionId);

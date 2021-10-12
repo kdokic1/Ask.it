@@ -19,7 +19,6 @@ const TopUsers = () => {
             if(response.ok){
                 const fetchedPeople = await response.json();
                 setTopThreePeople(fetchedPeople);
-                console.log(topThreePeople);
             }
         }
         fetchPeople()

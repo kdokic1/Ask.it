@@ -3,12 +3,38 @@ import { useParams } from "react-router-dom";
 import Answers from './Answers';
 import LikeIcon from '../images/like.png';
 import DislikeIcon from '../images/dislike.png';
-import '../style/questionWithAnswers.css'
+import '../style/questionWithAnswers.css';
+import {addVote} from '../helpers/questionHelper';
 
 const QuestionWithAnswers = ({isAuthenticated, setAuth}) => {
     const [question, setQuestion] = useState({});
+    const [numberOfAnswers, setNumberOfAnswers] = useState(0);
+    const [numberOfLikes, setNumberOfLikes] = useState(0);
+    const [numberOfDislikes, setNumberOfDislikes] = useState(0);
     const { questionId } = useParams();
     var date = new Date(question.date);
+
+    const answerAdded = () => {
+        setNumberOfAnswers(numberOfAnswers + 1);
+    };
+
+    const answerDeleted = () => {
+        setNumberOfAnswers(numberOfAnswers - 1);
+    };
+
+    const onVoteHandler = async (isLike) => {
+        console.log(isLike);
+        const response = await addVote(questionId, isLike);
+        if (response.ok) {
+            const like = await response.json();
+            if(isLike) {
+                setNumberOfLikes(numberOfLikes + 1);
+            }
+            else {
+                setNumberOfDislikes(numberOfDislikes + 1);
+            }
+        }
+    };
 
     useEffect(() => {
         if(isAuthenticated === false && localStorage.token !== undefined) {
@@ -26,8 +52,10 @@ const QuestionWithAnswers = ({isAuthenticated, setAuth}) => {
             });
             if(response.ok){
                 const fetchedQuestion = await response.json();
-                console.log(fetchedQuestion);
                 setQuestion(fetchedQuestion);
+                setNumberOfAnswers(fetchedQuestion.numberOfAnswers);
+                setNumberOfLikes(fetchedQuestion.numberOfLikes);
+                setNumberOfDislikes(fetchedQuestion.numberOfDislikes);
             }
         }
         fetchData();
@@ -40,22 +68,27 @@ const QuestionWithAnswers = ({isAuthenticated, setAuth}) => {
                 <p>{question.userEmail}</p>
                 <p>{date.toLocaleDateString()} {date.getHours()}:{date.getMinutes()}</p>
                 <div className="numberDetails">
-                    <p>{question.numberOfAnswers}</p>
+                    <p>{numberOfAnswers}</p>
                     <p>Answers</p>
                 </div>
                 <div className="numberDetails">
-                    <p>{question.numberOfLikes}</p>
+                    <p>{numberOfLikes}</p>
                     { !isAuthenticated && <p>Likes</p> }
-                    { isAuthenticated && <img src={LikeIcon} alt="Like"/> }
+                    { isAuthenticated && <img src={LikeIcon} alt="Like" onClick={() => onVoteHandler(true)} /> }
                 </div>
                 <div className="numberDetails">
-                    <p>{question.numberOfDislikes}</p>
+                    <p>{numberOfDislikes}</p>
                     { !isAuthenticated && <p>Dislikes</p>}
-                    { isAuthenticated && <img src={DislikeIcon} alt="Dislike"/> }
+                    { isAuthenticated && <img src={DislikeIcon} alt="Dislike" onClick={() => onVoteHandler(false)} /> }
                 </div>
             </div>
             <p className="questDescription">{question.description}</p>
-            <Answers questionId={questionId} isAuthenticated={isAuthenticated}/>
+            <Answers
+                questionId = {questionId}
+                isAuthenticated = {isAuthenticated}
+                answerAdded = {answerAdded}
+                answerDeleted = {answerDeleted}
+            />
         </div>
      );
 }

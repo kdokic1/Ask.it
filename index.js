@@ -16,6 +16,8 @@ const Notification = require('./models/Notification');
 User.hasMany(Question)
 User.hasMany(Answer)
 Question.hasMany(Answer)
+User.hasMany(Like)
+Question.hasMany(Like)
 
 //process.env.PORT
 //process.env.NODE_ENV => production or undefined

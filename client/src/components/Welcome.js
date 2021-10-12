@@ -3,10 +3,12 @@ import { useHistory } from 'react-router-dom';
 import '../style/btn.css';
 
 const Welcome = () => {
+
     const history = useHistory();
     const handleHomeClick = () => history.push('/home');
     const handleLoginClick = () => history.push('/login');
     const handleSignupClick = () => history.push('/signup');
+    
     return ( 
         <div className="welcome">
             <div>
