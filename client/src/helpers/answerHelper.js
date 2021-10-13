@@ -1,7 +1,4 @@
-const jwt = require('jsonwebtoken');
-require('dotenv').config();
-
-const deleteAnswer = async (id, answers, setAnswers) => {
+export const deleteAnswer = async (id, answers, setAnswers) => {
     setAnswers(answers.filter(ans => ans.id !== id));
     await fetch(`/app/answer/${id}`, {
         method: 'DELETE',
@@ -13,10 +10,10 @@ const deleteAnswer = async (id, answers, setAnswers) => {
     });
 };
 
-const addAnswer = async (questionId, newAnswerDescription, setNewAnswerDescription) => {
+export const addAnswer = async (questionId, newAnswerDescription, setNewAnswerDescription) => {
     var data = {
         questionId: questionId,
-        description: newAnswerDescription,
+        description: newAnswerDescription, 
         date: new Date().toLocaleString()
     };
 
@@ -35,7 +32,7 @@ const addAnswer = async (questionId, newAnswerDescription, setNewAnswerDescripti
     return newAns;
 };
 
-const getAnswers = async (isAuthenticated ,questionId, setAnswers) => {
+export const getAnswers = async (isAuthenticated ,questionId, setAnswers) =>  {
     var path = "questionAnswers";
     if(isAuthenticated) path = "app/questionAnswers";
     const response = await fetch(`/${path}/${questionId}`, {
@@ -52,5 +49,3 @@ const getAnswers = async (isAuthenticated ,questionId, setAnswers) => {
         setAnswers(fetchedAnswers);
     }
 };
-
-module.exports = {deleteAnswer, addAnswer, getAnswers};

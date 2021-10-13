@@ -1,7 +1,4 @@
-const jwt = require('jsonwebtoken');
-require('dotenv').config();
-
-const getAllQuestions = async () => {
+export const getAllQuestions = async () => {
     const response = await fetch('/questions', {
         method: "GET",
         headers: { 
@@ -16,7 +13,7 @@ const getAllQuestions = async () => {
     }
 };
 
-const addVote = async (questionId, isLike) => {
+export const addVote = async (questionId, isLike) => {
     const like = {
         questionId: questionId,
         isLike: isLike
@@ -34,5 +31,3 @@ const addVote = async (questionId, isLike) => {
 
     return response;
 };
-
-module.exports = {getAllQuestions, addVote};
