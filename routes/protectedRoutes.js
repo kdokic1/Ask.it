@@ -211,4 +211,36 @@ router.delete("/question/:questionId", async (req, res) => {
     }
 });
 
+//addQuestion
+router.post("/addQuestion", async (req, res) => {
+    try {
+        var userId = res.locals.id;
+        const {title, description, date} = req.body;
+
+        const newQuestion = await Question.create({title: title, description: description, date: date, UserId: userId});
+
+        const numberOfAnswers = await getNumberOfQuestionAnswers(newQuestion.id);
+        const numberOfLikes = await getNumberOfLikes(newQuestion.id);
+        const numberOfDislikes = await getNumberOfDislikes(newQuestion.id);
+        const userEmail = await getUserEmail(newQuestion.UserId);
+
+        var data = {
+            id: newQuestion.id,
+            userId: newQuestion.userId,
+            title: newQuestion.title,
+            description: newQuestion.description,
+            date: newQuestion.date,
+            numberOfLikes: numberOfLikes,
+            numberOfDislikes: numberOfDislikes,
+            numberOfAnswers: numberOfAnswers,
+            userEmail: userEmail
+        }
+    
+        res.status(201).json(data);
+    } catch (err) {
+        console.log(err);
+        res.status(500).send("Server error");
+    }
+});
+
 module.exports = router;

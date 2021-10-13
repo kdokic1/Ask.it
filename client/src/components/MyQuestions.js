@@ -5,13 +5,32 @@ import '../style/myQuestions.css';
 import Delete from '../images/trash.png';
 import Swal from 'sweetalert2';
 import { deleteQuestion } from '../helpers/questionHelper';
+import { addQuestion } from '../helpers/questionHelper';
 
 const MyQuestions = ({isAuthenticated}) => {
     const [questions, setQuestions] = useState([]);
     const [numOfDispleyedQuest, setNumOfDispleyedQuest] = useState(6);
+    const [title, setTitle] = useState('');
+    const [description, setDescription] = useState('');
 
     const loadMoreHandler = () => {
         setNumOfDispleyedQuest(numOfDispleyedQuest + 5);
+    };
+
+    const askQuestionHandler = async () => {
+        if (title === '') return;
+        const newQuestion = await addQuestion(title, description);
+        if(newQuestion) {
+            Swal.fire({
+                icon: 'success',
+                title: 'Your question has been successfully added.',
+                showConfirmButton: false,
+                timer: 1500
+              });
+              setQuestions([newQuestion, ...questions]);
+              setTitle('');
+              setDescription('');
+        }
     };
 
     const onDeleteHandler = (e, id) => {
@@ -63,7 +82,27 @@ const MyQuestions = ({isAuthenticated}) => {
                     ))}
                     <button onClick={loadMoreHandler} className="btn loadMoreBtn">load more...</button>
                </div>
-                <p className="col3">jos jedna kolona</p>
+               <div>
+                    <p className="allQuestions">Ask Question</p>
+                    <p>Title</p>
+                    <input
+                        type="text"
+                        placeholder="enter your specific question"
+                        required
+                        value={title}
+                        onChange = {(e) => setTitle(e.target.value)}
+                        className="newQuestionTitle"
+                    />
+                    <p>Description</p>
+                    <textarea
+                        className ="newQuestionDescription"
+                        value = {description}
+                        required
+                        placeholder="give us more information about your question"
+                        onChange = {(e) => setDescription(e.target.value)}
+                    />
+                    <button onClick={askQuestionHandler}>Ask</button>
+               </div>
            </div>
         </div>
      );
