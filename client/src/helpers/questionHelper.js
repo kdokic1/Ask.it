@@ -13,6 +13,22 @@ export const getAllQuestions = async () => {
     }
 };
 
+
+export const getUserQuestions = async () => {
+    const response = await fetch('/app/userQuestions', {
+        method: "GET",
+        headers: { 
+            token: localStorage.token,
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+         }, 
+    });
+    if(response.ok){
+        const fetchedQuestions = await response.json();
+        return fetchedQuestions;
+    }
+};
+
 export const addVote = async (questionId, isLike) => {
     const like = {
         questionId: questionId,
@@ -31,3 +47,16 @@ export const addVote = async (questionId, isLike) => {
 
     return response;
 };
+
+export const deleteQuestion = async (id, questions, setQuestions) => {
+    setQuestions(questions.filter(quest => quest.id !== id));
+    await fetch(`/app/question/${id}`, {
+        method: 'DELETE',
+        headers: {
+            token: localStorage.token,
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        }
+    });
+};
+

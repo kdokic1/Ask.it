@@ -1,0 +1,17 @@
+.myQuestionsContainer {
+    display: flex;
+    flex-direction: row;
+}
+
+.questionBox {
+    display: table;
+}
+
+.cell {
+    display: table-cell;
+}
+
+
+
+
+

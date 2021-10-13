@@ -14,7 +14,8 @@
 .dateAndBy, .statistics {
     display: flex;
     flex-direction: column;
-    padding-left: 30px;
+    padding-left: 20px;
+    padding-right: 20px;
     font-size: 10pt;
 }
 

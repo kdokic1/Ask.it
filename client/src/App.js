@@ -4,6 +4,7 @@ import Login from './components/Login';
 import Signup from './components/Signup';
 import Welcome from './components/Welcome';
 import QuestionWithAnswers from './components/QuestionWithAnswers';
+import MyQuestions from './components/MyQuestions';
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 import { useState } from 'react';
 
@@ -67,6 +68,14 @@ function App() {
               path="/question/:questionId"
               render={props => 
                   <QuestionWithAnswers isAuthenticated={isAuthenticated} setAuth={setAuth}/>
+              }
+            />
+
+            <Route
+              exact
+              path="/myQuestions"
+              render={props => 
+                  <MyQuestions isAuthenticated={isAuthenticated} />
               }
             />
         

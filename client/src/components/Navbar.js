@@ -19,6 +19,7 @@ const Navbar = ({isAuthenticated, setAuth}) => {
                 <Link to="/home">Home</Link>
                 {!isAuthenticated && <Link to="/login">Login</Link>}
                 {!isAuthenticated && <Link to="/signup">Signup</Link>}
+                {isAuthenticated && <Link to="/myQuestions">My Questions</Link>}
                 {isAuthenticated && <Link to="/" onClick={handleLogout}>Logout</Link>}
             </div>
         </nav>

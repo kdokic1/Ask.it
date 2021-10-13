@@ -7,16 +7,8 @@ const Question = require('../models/Question');
 const User = require('../models/User');
 const Like = require('../models/Like');
 const validator = require('../middleware/validator');
+const { getUserEmail, getNumberOfLikes, getNumberOfDislikes, getNumberOfQuestionAnswers } = require('../utils/helperFunctions');
 
-const getUserEmail = async (id) => {
-    const user = await User.findOne({
-        where: {
-            id: id
-        }
-    });
-
-    return user.email
-}
 
 router.post("/addAnswer", async (req, res) => {
     try {
@@ -142,6 +134,77 @@ router.put("/editAnswer", async (req, res) => {
                 );
     
         res.status(201).json(editedAnswer);
+    } catch (err) {
+        console.log(err);
+        res.status(500).send("Server error");
+    }
+});
+
+router.get("/userQuestions", async (req, res) => {
+    try {
+        var userId = res.locals.id;
+        const result = [];
+        const questions = await Question.findAll({
+            where: {
+                UserId: userId
+            },
+            order: [
+                ['date', 'DESC']
+            ]
+        });
+
+        for(var i = 0; i < questions.length; i++) {
+            
+            const numberOfAnswers = await getNumberOfQuestionAnswers(questions[i].id);
+            const numberOfLikes = await getNumberOfLikes(questions[i].id);
+            const numberOfDislikes = await getNumberOfDislikes(questions[i].id);
+            const userEmail = await getUserEmail(questions[i].UserId);
+
+            var data = {
+                id: questions[i].id,
+                userId: questions[i].userId,
+                title: questions[i].title,
+                description: questions[i].description,
+                date: questions[i].date,
+                numberOfLikes: numberOfLikes,
+                numberOfDislikes: numberOfDislikes,
+                numberOfAnswers: numberOfAnswers,
+                userEmail: userEmail
+            }
+    
+            result.push(data);
+        }
+
+        res.json(result);
+
+    } catch (err) {
+        console.log(err);
+        res.status(500).send("Server error");
+    }
+});
+
+router.delete("/question/:questionId", async (req, res) => {
+    try {
+        const delLikes = await Like.destroy({
+            where: {
+                QuestionId: req.params.questionId
+            }
+        });
+
+        const delAnswers = await Answer.destroy({
+            where: {
+                QuestionId: req.params.questionId
+            }
+        });
+
+        const del = await Question.destroy({
+            where: {
+                id: req.params.questionId
+            }
+        });
+        
+        res.json(del);
+
     } catch (err) {
         console.log(err);
         res.status(500).send("Server error");
