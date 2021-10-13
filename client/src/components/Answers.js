@@ -3,7 +3,7 @@ import '../style/answer.css';
 import Edit from '../images/edit.png';
 import Delete from '../images/trash.png';
 import Swal from 'sweetalert2';
-import {getAnswers, addAnswer, deleteAnswer} from '../helpers/answerHelper';
+import {deleteAnswer, addAnswer, getAnswers} from '../helpers/answerHelper';
 
 const Answers = ({questionId, isAuthenticated, answerAdded, answerDeleted}) => {
     const [answers, setAnswers] = useState([]);
