@@ -6,11 +6,15 @@ import Swal from 'sweetalert2';
 import {deleteAnswer} from '../helpers/answerHelper';
 import {addAnswer} from '../helpers/answerHelper';
 import {getAnswers} from '../helpers/answerHelper';
+import {editAnswer} from '../helpers/answerHelper';
 
 const Answers = ({questionId, isAuthenticated, answerAdded, answerDeleted}) => {
     const [answers, setAnswers] = useState([]);
     const [newAnswerDescription, setNewAnswerDescription] = useState('');
+    const [selectedAnsForEdit, setSelectedAnsForEdit] = useState('');
+    const [editedAnswer, setEditedAnswer] = useState('');
 
+    //delete answer
     const onDeleteHandler = async (e, id) => {
         e.preventDefault();
         Swal.fire({
@@ -32,14 +36,41 @@ const Answers = ({questionId, isAuthenticated, answerAdded, answerDeleted}) => {
               )
             }
           })
-        
     };
 
-    const onEditHandler = async () => {
-        
+    //edit answer
+    const onEditHandler = async (e, id, description) => {
+        e.preventDefault();
+        setSelectedAnsForEdit(id);
+        setEditedAnswer(description);
     };
 
+    const onEditingAnswer = (event, id) => {
+        setEditedAnswer(event.target.value);
+    };
+
+    const cancelEdit = () => {
+        setSelectedAnsForEdit('');
+        setEditedAnswer('');
+    };
+
+    const saveEditedAnswer = async () => {
+        if( editedAnswer === '' ) return;
+        const resp = await editAnswer(selectedAnsForEdit, editedAnswer);
+        setSelectedAnsForEdit('');
+        setEditedAnswer('');
+        setAnswers(
+            answers.map( ans =>
+                ans.id === selectedAnsForEdit
+                ? {...ans, description: editedAnswer, date: new Date().toLocaleString()}
+                : ans
+            )
+        );
+    };
+
+    //add answer
     const addAnswerHandler = async () => {
+        if(newAnswerDescription === '') return;
         const newAns = await addAnswer(questionId, newAnswerDescription, setNewAnswerDescription);
         if(newAns) {
             Swal.fire({
@@ -57,6 +88,7 @@ const Answers = ({questionId, isAuthenticated, answerAdded, answerDeleted}) => {
         setNewAnswerDescription(event.target.value);
     };
 
+    //get all answers
     useEffect(() => {
         getAnswers(isAuthenticated, questionId, setAnswers);
     }, []);
@@ -92,7 +124,7 @@ const Answers = ({questionId, isAuthenticated, answerAdded, answerDeleted}) => {
                             {
                                 isAuthenticated && 
                                 ans.currentUsersAnswer && 
-                                <img src={Edit} alt="Edit" className="editIcons" onClick={onEditHandler} />
+                                <img src={Edit} alt="Edit" className="editIcons" onClick={(e) => { onEditHandler(e, ans.id, ans.description) }} />
                             }
                         </div>
                         <div className="cell">
@@ -101,13 +133,29 @@ const Answers = ({questionId, isAuthenticated, answerAdded, answerDeleted}) => {
                                 ans.currentUsersAnswer &&
                                 <img 
                                     src={Delete}
-                                    alt="Edit"
+                                    alt="Delete"
                                     className="editIcons"
                                     onClick={(e) => { onDeleteHandler(e, ans.id) }} 
                                 />
                             }
                         </div>
                     </div>
+                    {
+                        ans.id === selectedAnsForEdit && 
+                        <textarea
+                            className ="textAreaEditAns"
+                            value = {editedAnswer}
+                            onChange = {onEditingAnswer}
+                        />
+                    }
+                    {
+                        ans.id === selectedAnsForEdit && 
+                        <button className="btnCancel" onClick={cancelEdit} >Cancel</button>
+                    }
+                    {
+                        ans.id === selectedAnsForEdit && 
+                        <button className="btnSave" onClick={saveEditedAnswer} >Save</button>
+                    }
                     <p className="ansEmail">{ans.userEmail}</p>
                     <p className="ansDate">{new Date(ans.date).toLocaleDateString()} {new Date(ans.date).getHours()}:{new Date(ans.date).getMinutes()}</p>
                     <hr/>

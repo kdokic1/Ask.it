@@ -133,4 +133,19 @@ router.post("/questionVote", async (req, res) => {
     }
 });
 
+router.put("/editAnswer", async (req, res) => {
+    try {
+        const {id, description, date} = req.body;
+
+        const editedAnswer = await Answer.update({description: description, date: date}, 
+                { where: { id: id } }
+                );
+    
+        res.status(201).json(editedAnswer);
+    } catch (err) {
+        console.log(err);
+        res.status(500).send("Server error");
+    }
+});
+
 module.exports = router;

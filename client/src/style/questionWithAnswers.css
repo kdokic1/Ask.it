@@ -50,3 +50,8 @@
     padding-left: 20px;
     padding-right: 20px;
 }
+
+.likeIcon:hover {
+    transform: translateY(-3px);
+    background-color: transparent;
+}

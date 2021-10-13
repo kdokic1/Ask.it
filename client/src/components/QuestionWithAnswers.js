@@ -74,12 +74,12 @@ const QuestionWithAnswers = ({isAuthenticated, setAuth}) => {
                 <div className="numberDetails">
                     <p>{numberOfLikes}</p>
                     { !isAuthenticated && <p>Likes</p> }
-                    { isAuthenticated && <img src={LikeIcon} alt="Like" onClick={() => onVoteHandler(true)} /> }
+                    { isAuthenticated && <img src={LikeIcon} alt="Like" className="likeIcon" onClick={() => onVoteHandler(true)} /> }
                 </div>
                 <div className="numberDetails">
                     <p>{numberOfDislikes}</p>
                     { !isAuthenticated && <p>Dislikes</p>}
-                    { isAuthenticated && <img src={DislikeIcon} alt="Dislike" onClick={() => onVoteHandler(false)} /> }
+                    { isAuthenticated && <img src={DislikeIcon} alt="Dislike" className="likeIcon" onClick={() => onVoteHandler(false)} /> }
                 </div>
             </div>
             <p className="questDescription">{question.description}</p>

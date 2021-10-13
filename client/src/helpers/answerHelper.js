@@ -11,10 +11,13 @@ export const deleteAnswer = async (id, answers, setAnswers) => {
 };
 
 export const addAnswer = async (questionId, newAnswerDescription, setNewAnswerDescription) => {
+    var date = new Date();
+    date.setHours(date.getHours() + 2);
+
     var data = {
         questionId: questionId,
         description: newAnswerDescription, 
-        date: new Date().toLocaleString()
+        date: date.toLocaleString()
     };
 
     const response = await fetch('/app/addAnswer', {
@@ -48,4 +51,27 @@ export const getAnswers = async (isAuthenticated ,questionId, setAnswers) =>  {
         const fetchedAnswers = await response.json();
         setAnswers(fetchedAnswers);
     }
+};
+
+export const editAnswer = async (answerId, editedAnswerDescription) => {
+    var date = new Date();
+    date.setHours(date.getHours() + 2);
+    var data = {
+        id: answerId,
+        description: editedAnswerDescription, 
+        date: date.toLocaleString()
+    };
+
+    const response = await fetch('/app/editAnswer', {
+        method: 'PUT',
+        headers: {
+            token: localStorage.token,
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        },
+        body: JSON.stringify(data)
+    });
+
+    const editedAns = await response.json();
+    return editedAns;
 };
