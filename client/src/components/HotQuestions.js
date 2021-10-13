@@ -1,9 +1,15 @@
 import { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import LikeIcon from '../images/like.png';
 import '../style/hotQuestion.css'
 
 const HotQuestions = () => {
     const [hotQuestions, setHotQuestions] = useState([]);
+    const history = useHistory();
+
+    const handleQuestionDetails = (questionId) => {
+        history.push(`/question/${questionId}`);
+    }
 
     useEffect(() => {
         const fetchHotQuestions = async () => {
@@ -26,7 +32,7 @@ const HotQuestions = () => {
         <div>
             {hotQuestions.map((quest) => (
                 <div key={quest.id} className="hotQuestion">
-                    <p className="hotTitle">{quest.title}</p>
+                    <p className="hotTitle" onClick = {() => handleQuestionDetails(quest.id)} >{quest.title}</p>
                     <div className="likes">
                         <p className="hotLikesNumber">{quest.numberOfLikes}</p>
                         <img src={LikeIcon} alt="Likes" className="likeIcon"/>

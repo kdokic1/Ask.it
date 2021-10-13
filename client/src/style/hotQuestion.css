@@ -22,3 +22,7 @@
     width: 60%;
     font-weight: bold;
 }
+
+.hotTitle:hover {
+    cursor: pointer;
+}

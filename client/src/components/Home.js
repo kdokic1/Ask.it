@@ -39,7 +39,7 @@ const Home = () => {
            </div>
            <div className="hotQuestionsContainer">
                 <p className="topThreeQuestions"><img src={Fire} alt="Hot"/>QUESTIONS</p>
-                <HotQuestions />
+                <HotQuestions/>
            </div>
 
         </div>
