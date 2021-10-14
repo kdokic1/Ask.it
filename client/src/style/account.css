@@ -1,0 +1,44 @@
+.accountContainer {
+    width: 60%;
+    margin: auto;
+    margin-top: 3%;
+}
+
+.accountContainer h2 {
+    margin-bottom: 2.5%;
+    font-weight: bold;
+}
+
+.accountContainer p:first-child {
+    font-weight: bold;
+    width: 15%;
+}
+
+.accountContainer p:nth-child(2) {
+    color: rgb(122, 122, 122);
+    width: 85%;
+}
+
+.accountContainer button {
+    border: none;
+    background-color: transparent;
+    font-size: 12pt;
+    font-weight: bold;
+    color: rgb(74, 145, 226);
+}
+
+.accountContainer button:hover {
+    text-decoration: underline;
+}
+
+.accountContainer div {
+    display: flex;
+    flex-direction: row;
+    margin: 5px 5px 5px 5px;
+    padding: 15px 10px 15px 10px;
+}
+
+.accountContainer div:hover {
+    background-color: rgba(235, 235, 235, 0.507);
+}
+

@@ -7,6 +7,7 @@ import QuestionWithAnswers from './components/QuestionWithAnswers';
 import MyQuestions from './components/MyQuestions';
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 import { useState } from 'react';
+import Account from './components/Account';
 
 function App() {
 
@@ -76,6 +77,14 @@ function App() {
               path="/myQuestions"
               render={props => 
                   <MyQuestions isAuthenticated={isAuthenticated} />
+              }
+            />
+
+            <Route
+              exact
+              path="/account"
+              render={props => 
+                  <Account />
               }
             />
         
