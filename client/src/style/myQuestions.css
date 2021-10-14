@@ -1,6 +1,7 @@
 .myQuestionsContainer {
     display: flex;
     flex-direction: row;
+    width: 100%;
 }
 
 .questionBox {
@@ -11,6 +12,50 @@
     display: table-cell;
 }
 
+.col1, .col2 {
+    width: 50%;
+}
+
+.newQuestionTitle {
+    width: 60%;
+    height: 30px;
+    padding: 5px;
+    font-size: 12pt;
+    margin-left: 20%;
+    margin-bottom: 30px;
+}
+
+.newQuestionDescription {
+    width: 60%;
+    height: 200px;
+    padding: 1%;
+    font-size: 12pt;
+    margin-left: 20%;
+    margin-bottom: 30px;
+}
+
+.col2 p:not(:first-child) {
+    font-family: 'Roboto', sans-serif;
+    font-size: 18pt;
+    color: rgb(155, 165, 162);
+    letter-spacing: 2.5px;
+    font-weight: bold;
+    margin-left: 20%;
+    margin-bottom: 10px;
+    margin-top: 15px;
+}
+
+.newQuestionDescription:focus, .newQuestionTitle:focus {
+    outline: none !important;
+    border:1px solid rgb(81, 91, 100);
+    box-shadow: 0 0 2px #6a7581;
+}
+
+.col2 .btn {
+    margin-top: 5px;
+    margin-left: 40%;
+    background-color: #5dcec8;
+}
 
 
 

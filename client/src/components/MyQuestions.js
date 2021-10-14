@@ -64,7 +64,7 @@ const MyQuestions = ({isAuthenticated}) => {
     return ( 
         <div>
             <div className="myQuestionsContainer">
-               <div>
+               <div className="col1">
                     <p className="allQuestions">My Questions</p>
                     {questions.slice(0, numOfDispleyedQuest).map((quest) => (
                         <div key={quest.id} className="questionBox">
@@ -82,7 +82,7 @@ const MyQuestions = ({isAuthenticated}) => {
                     ))}
                     <button onClick={loadMoreHandler} className="btn loadMoreBtn">load more...</button>
                </div>
-               <div>
+               <div className="col2">
                     <p className="allQuestions">Ask Question</p>
                     <p>Title</p>
                     <input
@@ -101,7 +101,7 @@ const MyQuestions = ({isAuthenticated}) => {
                         placeholder="give us more information about your question"
                         onChange = {(e) => setDescription(e.target.value)}
                     />
-                    <button onClick={askQuestionHandler}>Ask</button>
+                    <button onClick={askQuestionHandler} className="btn">Ask</button>
                </div>
            </div>
         </div>
