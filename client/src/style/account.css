@@ -2,6 +2,7 @@
     width: 60%;
     margin: auto;
     margin-top: 3%;
+    margin-bottom: 10%;
 }
 
 .accountContainer h2 {
@@ -29,6 +30,7 @@
 
 .accountContainer button:hover {
     text-decoration: underline;
+    cursor: pointer;
 }
 
 .accountContainer div {
@@ -41,4 +43,50 @@
 .accountContainer div:hover {
     background-color: rgba(235, 235, 235, 0.507);
 }
+
+.editContainer {
+    background-color: rgba(235, 235, 235, 0.507);;
+}
+
+.editContainer input {
+    width: 50%;
+    height: 30px;
+    padding: 3px 3px 3px 10px;
+    font-size: 12pt;
+}
+
+.editContainer input:focus {
+    outline: none !important;
+    border:1px solid rgb(81, 91, 100);
+    box-shadow: 0 0 2px #6a7581;
+}
+
+.editContainer button {
+    margin-left: 30px;
+}
+
+.editContainer button:hover {
+    text-decoration: none;
+}
+
+.editContainer button:first-of-type:hover {
+    color: rgb(212, 101, 81);
+}
+
+.editContainer button:nth-of-type(2):hover {
+    color: rgb(158, 158, 158);
+}
+
+.editContainer p {
+    color: tomato;
+    margin-top: 1%;
+    margin-right: 5%;
+}
+
+.emailError {
+    font-size: 10pt;
+    color: rgb(223, 52, 52);
+    margin-left: 5px;
+}
+
 

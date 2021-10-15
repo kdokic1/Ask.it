@@ -7,6 +7,8 @@ const Question = require('../models/Question');
 const User = require('../models/User');
 const Like = require('../models/Like');
 const validator = require('../middleware/validator');
+const sequelize = require('../config/database');
+const { Op } = require("sequelize");
 const { getUserEmail, getNumberOfLikes, getNumberOfDislikes, getNumberOfQuestionAnswers } = require('../utils/helperFunctions');
 
 
@@ -237,6 +239,58 @@ router.post("/addQuestion", async (req, res) => {
         }
     
         res.status(201).json(data);
+    } catch (err) {
+        console.log(err);
+        res.status(500).send("Server error");
+    }
+});
+
+router.get("/accountDetails", async (req, res) => {
+    try {
+        var userId = res.locals.id;
+        const user = await User.findOne({
+            where: {
+                id: userId
+            }
+        });
+
+        var data = {
+            firstName: user.first_name,
+            lastName: user.last_name,
+            email: user.email
+        }
+
+        res.json(data);
+
+    } catch (err) {
+        console.log(err);
+        res.status(500).send("Server error");
+    }
+});
+
+
+router.put("/editUser", async (req, res) => {
+    try {
+        var userId = res.locals.id;
+        const {firstName, lastName, email} = req.body;
+
+        let regexEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+        if(!email) {
+            return res.status(401).json('Please enter your email address.');
+        } else if (!email.match(regexEmail)) {
+            return res.status(401).json('Enter an email address in the correct format, like name@example.com.');
+        }
+
+        const user = await User.findOne({where: {email: email, id: {[Op.ne]: userId}}});
+        if (user) {
+            return res.status(401).json('User already exists.');
+        }
+
+        const editedUser = await User.update({first_name: firstName, last_name: lastName, email: email}, 
+                { where: { id: userId } }
+                );
+    
+        res.status(201).json(editedUser);
     } catch (err) {
         console.log(err);
         res.status(500).send("Server error");
