@@ -54,4 +54,5 @@
 .voteIcon:hover {
     transform: translateY(-3px);
     background-color: transparent;
+    cursor: pointer;
 }

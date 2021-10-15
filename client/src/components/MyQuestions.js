@@ -80,7 +80,8 @@ const MyQuestions = ({isAuthenticated}) => {
                             </div>
                         </div>
                     ))}
-                    <button onClick={loadMoreHandler} className="btn loadMoreBtn">load more...</button>
+                    {questions.length === 0 && <p className="noQuestions">You didn't ask anything yet.</p>}
+                    {questions.length !== 0 && <button onClick={loadMoreHandler} className="btn loadMoreBtn">load more...</button>}
                </div>
                <div className="col2">
                     <p className="allQuestions">Ask Question</p>

@@ -29,3 +29,17 @@ export const editAccountDetails = async (acc) => {
     return response;
 };
 
+export const changePassword = async (passwords) => {
+
+    const response = await fetch('/app/changePassword', {
+        method: 'PUT',
+        headers: {
+            token: localStorage.token,
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        },
+        body: JSON.stringify(passwords)
+    });
+
+    return response;
+};

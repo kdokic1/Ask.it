@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import '../style/account.css';
 import { getAccountDetails } from '../helpers/userHelper';
 import { editAccountDetails } from '../helpers/userHelper';
+import { changePassword } from '../helpers/userHelper';
 import Swal from 'sweetalert2';
 
 const Account = () => {
@@ -13,6 +14,7 @@ const Account = () => {
     const [currentPassword, setCurrentPassword] = useState('');
     const [newPassword, setNewPassword] = useState('');
     const [emailError, setEmailError] = useState('');
+    const [passwordError, setPasswordError] = useState('');
 
     useEffect(async () => {
         const accountDetails = await getAccountDetails();
@@ -28,7 +30,14 @@ const Account = () => {
 
     const onCancelClick = (part) => {
         setSelectEdit({...selectEdit, [part]: false})
-        setEmailError('');
+        if(part === "email")
+            setEmailError('');
+        
+        if(part === "password") {
+            setPasswordError('');
+            setCurrentPassword('');
+            setNewPassword('');
+        }
     };
 
     const onSaveClick = async (part) => {
@@ -55,6 +64,31 @@ const Account = () => {
             const err = await response.json();
             setEmailError(err);
         }
+    };
+
+    const onSavePasswordClick = async (part) => {
+        var data = {
+            currentPassword: currentPassword,
+            newPassword: newPassword
+        };
+
+        const response = await changePassword(data);
+
+        if(response.ok) {
+            const acc = await response.json();
+            onCancelClick(part);
+            Swal.fire({
+                icon: 'success',
+                title: 'Your changes have been saved.',
+                showConfirmButton: false,
+                timer: 1500
+              })
+        }
+        else if (response.status === 401) {
+            const error = await response.json();
+            setPasswordError(error);
+        }
+
     };
 
     return ( 
@@ -140,10 +174,11 @@ const Account = () => {
                         value={newPassword}
                         onChange = {(e) => setNewPassword(e.target.value)}
                     />
-                    <button>Save</button>
+                    <button onClick={() => onSavePasswordClick("password")} >Save</button>
                     <button onClick={()=> onCancelClick("password")} >Cancel</button>
                 </div> 
             }
+            <p className="emailError">{passwordError}</p>
             <hr/>
         </div>
      );

@@ -62,7 +62,7 @@ export const deleteQuestion = async (id, questions, setQuestions) => {
 
 export const addQuestion = async (title, description) => {
     var date = new Date();
-    date.setHours(date.getHours() + 2);
+    date.setHours(date.getHours() - 2);
 
     var data = {
         title: title,

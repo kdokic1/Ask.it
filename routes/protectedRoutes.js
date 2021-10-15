@@ -1,13 +1,10 @@
 const { Router } = require('express');
 const router = Router();
 const bcrypt = require('bcrypt');
-const jwtGenerator = require('../utils/jwtGenerator');
 const Answer = require('../models/Answer');
 const Question = require('../models/Question');
 const User = require('../models/User');
 const Like = require('../models/Like');
-const validator = require('../middleware/validator');
-const sequelize = require('../config/database');
 const { Op } = require("sequelize");
 const { getUserEmail, getNumberOfLikes, getNumberOfDislikes, getNumberOfQuestionAnswers } = require('../utils/helperFunctions');
 
@@ -290,7 +287,54 @@ router.put("/editUser", async (req, res) => {
                 { where: { id: userId } }
                 );
     
-        res.status(201).json(editedUser);
+        res.status(201).json("Successful");
+    } catch (err) {
+        console.log(err);
+        res.status(500).send("Server error");
+    }
+});
+
+
+router.put("/changePassword", async (req, res) => {
+    try {
+        var userId = res.locals.id;
+        var {currentPassword, newPassword} = req.body;
+
+        const user = await User.findOne({ where: { id: userId } });
+
+        const validPassword = await bcrypt.compare(currentPassword, user.password);
+
+        if(!validPassword) {
+            return res.status(401).json('You entered incorrect current password!');
+        }
+
+        if(!newPassword) {
+            return res.status(401).json('Your new password shouldn\'t be empty.');
+        } else if (newPassword.length < 5) {
+            return res.status(401).json('Password should contain at least 5 characters.');
+        }
+
+        //bcrypting password
+        const saltRound = 10;
+        const salt = await bcrypt.genSalt(saltRound);
+        const bcryptPassword = await bcrypt.hash(newPassword, salt);
+
+        const editedUserAcc = await User.update({password: bcryptPassword}, 
+                { where: { id: userId } }
+                );
+
+        if(editedUserAcc) {
+            var data = {
+                firstName: editedUserAcc.firstName,
+                lastName: editedUserAcc.lastName,
+                email: editedUserAcc.email
+            }
+            res.status(201).json("Successful");
+        }
+        else {
+            res.status(401).json("Unsuccessful");
+        }
+    
     } catch (err) {
         console.log(err);
         res.status(500).send("Server error");

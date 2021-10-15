@@ -57,6 +57,15 @@
     background-color: #5dcec8;
 }
 
+.myQuestionsContainer img {
+    cursor: pointer;
+}
+
+.noQuestions {
+    margin-left: 39.5%;
+    margin-top: 5%;
+}
+
 
 
 

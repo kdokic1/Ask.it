@@ -12,7 +12,7 @@ export const deleteAnswer = async (id, answers, setAnswers) => {
 
 export const addAnswer = async (questionId, newAnswerDescription, setNewAnswerDescription) => {
     var date = new Date();
-    date.setHours(date.getHours() + 2);
+    date.setHours(date.getHours() - 2);
 
     var data = {
         questionId: questionId,
@@ -55,7 +55,7 @@ export const getAnswers = async (isAuthenticated ,questionId, setAnswers) =>  {
 
 export const editAnswer = async (answerId, editedAnswerDescription) => {
     var date = new Date();
-    date.setHours(date.getHours() + 2);
+    date.setHours(date.getHours() - 2);
     var data = {
         id: answerId,
         description: editedAnswerDescription, 
