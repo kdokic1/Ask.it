@@ -17,6 +17,10 @@ function App() {
     setIsAuthenticated(boolean);
   }
 
+  window.onbeforeunload = () => {
+    localStorage.removeItem('token');
+  }
+
   return (
     <Router>
       <div className="App">

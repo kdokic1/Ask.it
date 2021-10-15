@@ -20,17 +20,22 @@
 }
 
 .userData {
-    border-top: none;
-    border-left: none;
-    border-right: none;
-    border-bottom: solid;
     border-width:1px;
-    background-color: transparent;
-    color: white;
+    height: 25px;
+    color: rgb(17, 25, 70);
     border-color: #515a5e;
+    border-radius: 3px;
+    padding-left: 10px;
     width: 70%;
     margin: auto;
     margin-top: 7px;
+    font-size: 11pt;
+    font-weight: 600;
+}
+
+.userData::placeholder {
+    font-size: 10pt;
+    font-weight: lighter;
 }
 
 .userData:focus {
