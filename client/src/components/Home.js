@@ -9,10 +9,10 @@ import {getAllQuestions} from '../helpers/questionHelper';
 
 const Home = () => {
     const [questions, setQuestions] = useState([]);
-    const [numOfDispleyedQuest, setNumOfDispleyedQuest] = useState(6);
+    const [numOfDispleyedQuest, setNumOfDispleyedQuest] = useState(10);
 
     const loadMoreHandler = () => {
-        setNumOfDispleyedQuest(numOfDispleyedQuest + 5);
+        setNumOfDispleyedQuest(numOfDispleyedQuest + 10);
     }
 
 

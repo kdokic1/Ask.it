@@ -9,12 +9,12 @@ import { addQuestion } from '../helpers/questionHelper';
 
 const MyQuestions = ({isAuthenticated}) => {
     const [questions, setQuestions] = useState([]);
-    const [numOfDispleyedQuest, setNumOfDispleyedQuest] = useState(6);
+    const [numOfDispleyedQuest, setNumOfDispleyedQuest] = useState(10);
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
 
     const loadMoreHandler = () => {
-        setNumOfDispleyedQuest(numOfDispleyedQuest + 5);
+        setNumOfDispleyedQuest(numOfDispleyedQuest + 10);
     };
 
     const askQuestionHandler = async () => {
