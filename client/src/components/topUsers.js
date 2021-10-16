@@ -26,6 +26,11 @@ const TopUsers = () => {
 
     return ( 
         <div className="topUsers">
+            <div>
+                <img src={firstPlace} alt="firstPlace" className="placeImg1"></img>
+                <img src={secondPlace} alt="secondPlace" className="placeImg"></img>
+                <img src={thirdPlace} alt="thirdPlace" className="placeImg"></img>
+            </div>
             <div className="threeUsers">
             {topThreePeople.map((user) => (
                     <div key={user.id} className="user" >
@@ -33,11 +38,6 @@ const TopUsers = () => {
                         <p className="topAns">Answered {user.numberOfAnswers} questions</p>
                     </div>
                 ))}
-            </div>
-            <div className="placesImages">
-                <img src={firstPlace} alt="firstPlace" className="placeImg"></img>
-                <img src={secondPlace} alt="secondPlace" className="placeImg"></img>
-                <img src={thirdPlace} alt="thirdPlace" className="placeImg"></img>
             </div>
         </div>
      );

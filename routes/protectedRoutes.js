@@ -218,17 +218,18 @@ router.delete("/question/:questionId", async (req, res) => {
             }
         });
 
+        const notif = await Notification.destroy({
+            where: {
+                QuestionId: req.params.questionId
+            }
+        });
+
         const del = await Question.destroy({
             where: {
                 id: req.params.questionId
             }
         });
 
-        const notif = await Notification.destroy({
-            where: {
-                QuestionId: req.params.questionId
-            }
-        });
         
         res.json(del);
 

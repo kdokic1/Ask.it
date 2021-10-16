@@ -1,24 +1,32 @@
 .topUsers {
     margin-top: 40px;
-    margin-left: 23%;
-    display: flex;
-    flex-direction: row;
+    margin:auto;
+    width: 60%;
 }
 
-.threeUsers, .placesImages {
+.threeUsers {
     display: flex;
     flex-direction: column;
+    margin-top: 20px;
+    width: 100%;
 }
 
-.placeImg {
-    margin-bottom: 60px;
-    width: 45%;
+.placeImg { 
+    width: 50px;
+    margin-right: 15px;
+    margin-left: 5px;
+    margin-top: 20px;
+}
+.placeImg1 {
+    width: 57px;
+    margin-right: 15px;
+    margin-top: 20px;
 }
 
 .user {
-    
-    margin-bottom: 80px;
+    margin-bottom: 22px;
     margin-right: 10px;
+    
 }
 
 .user .topEmail {
