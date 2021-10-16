@@ -27,9 +27,6 @@ const Signup = ({setAuth}) => {
     const handleSubmit = async(e) => {
         e.preventDefault();
         const user = { firstName, lastName, email, password };
-
-        if (emailError !== '' || passwordError !== '')
-            return;
         
         try {
             const response = await fetch('/auth/signup', {

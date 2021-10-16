@@ -6,7 +6,8 @@ const Question = require('../models/Question');
 const User = require('../models/User');
 const Like = require('../models/Like');
 const { Op } = require("sequelize");
-const { getUserEmail, getNumberOfLikes, getNumberOfDislikes, getNumberOfQuestionAnswers } = require('../utils/helperFunctions');
+const { getUserEmail, getNumberOfLikes, getNumberOfDislikes, getNumberOfQuestionAnswers, addNotification, getUserIdForQuestion, getQuestionTitle, getUserEmailForQuestion } = require('../utils/helperFunctions');
+const Notification = require('../models/Notification');
 
 
 router.post("/addAnswer", async (req, res) => {
@@ -32,7 +33,17 @@ router.post("/addAnswer", async (req, res) => {
             "userEmail": email,
             "currentUsersAnswer": currentUsersAnswer
         }
-    
+
+        //add notification for answer event
+
+        const userToNotify = await getUserIdForQuestion(data.QuestionId);
+        const userWhoFiredEvent = data.UserId;
+        const emailUserWhoFiredEvent = await getUserEmail(data.UserId);
+        const questionTitle = await getQuestionTitle(data.QuestionId);
+
+        if(userToNotify !== userWhoFiredEvent)
+            addNotification(userToNotify, userWhoFiredEvent, data.QuestionId, `${emailUserWhoFiredEvent} answered your question '${questionTitle}'`);
+
         res.status(201).json(data);
     } catch (err) {
         console.log(err);
@@ -113,6 +124,17 @@ router.post("/questionVote", async (req, res) => {
 
         if(!like) {
             const newLike = await Like.create({UserId: userId, QuestionId: questionId, is_like: isLike});
+
+            //add notification for vote event
+
+            const userToNotify = await getUserIdForQuestion(questionId);
+            const userWhoFiredEvent = userId;
+            const emailUserWhoFiredEvent = await getUserEmail(userId);
+            const questionTitle = await getQuestionTitle(questionId);
+
+            if(userToNotify !== userWhoFiredEvent)
+                addNotification(userToNotify, userWhoFiredEvent, questionId, `${emailUserWhoFiredEvent} voted your question '${questionTitle}'`);
+
             res.status(201).json(newLike);
         } else {
             res.status(401).json('Already give a vote to this question');
@@ -199,6 +221,12 @@ router.delete("/question/:questionId", async (req, res) => {
         const del = await Question.destroy({
             where: {
                 id: req.params.questionId
+            }
+        });
+
+        const notif = await Notification.destroy({
+            where: {
+                QuestionId: req.params.questionId
             }
         });
         
@@ -335,6 +363,24 @@ router.put("/changePassword", async (req, res) => {
             res.status(401).json("Unsuccessful");
         }
     
+    } catch (err) {
+        console.log(err);
+        res.status(500).send("Server error");
+    }
+});
+
+router.get("/userNotifications", async (req, res) => {
+    try {
+        var userId = res.locals.id;
+        const notifications = await Notification.findAll({
+            where: {
+                user_to_notify: userId
+            },
+            order: [ [ 'id', 'DESC' ]]
+        });
+
+        res.json(notifications);
+
     } catch (err) {
         console.log(err);
         res.status(500).send("Server error");

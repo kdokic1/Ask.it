@@ -8,6 +8,7 @@ import MyQuestions from './components/MyQuestions';
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 import { useState } from 'react';
 import Account from './components/Account';
+import Notifications from './components/Notifications';
 
 function App() {
 
@@ -89,6 +90,14 @@ function App() {
               path="/account"
               render={props => 
                   <Account />
+              }
+            />
+
+            <Route
+              exact
+              path="/notifications"
+              render={props => 
+                  <Notifications />
               }
             />
         

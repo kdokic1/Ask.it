@@ -32,11 +32,21 @@
   color: #3aafa9;
 }
 
+.links img {
+  vertical-align: middle;
+
+}
+
 .logo {
   margin-left: 30px;
   height: 40px;
   width: 100px;
   cursor: pointer;
+}
+
+.notification {
+  cursor: pointer;
+  margin-left: 10px;
 }
 
 

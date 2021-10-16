@@ -2,6 +2,7 @@ const User = require('../models/User');
 const Answer = require('../models/Answer');
 const Like = require('../models/Like');
 const Question = require('../models/Question');
+const Notification = require('../models/Notification');
 
 const getNumberOfQuestionAnswers  = async (id) => {
     const numberOfAnswers = await Answer.count({
@@ -59,4 +60,45 @@ const getUserEmailForQuestion = async (questionId) => {
     return user.email;
 };
 
-module.exports = {getUserEmail, getNumberOfLikes, getNumberOfDislikes, getNumberOfQuestionAnswers, getUserEmailForQuestion};
+const getUserIdForQuestion = async (questionId) => {
+    const question = await Question.findOne({
+        where: {
+            id: questionId
+        }
+    });
+
+
+    const user = await User.findOne({
+        where: {
+            id: question.UserId
+        }
+    });
+
+    return user.id;
+};
+
+const getQuestionTitle = async (questionId) => {
+    const question = await Question.findOne({
+        where: {
+            id: questionId
+        }
+    });
+
+    return question.title;
+};
+
+const addNotification  = async (userToNotify, userWhoFiredEvent, questionId, event) => {
+
+    const notification = await Notification.create({
+        user_to_notify: userToNotify,
+        user_who_fired_event: userWhoFiredEvent,
+        QuestionId: questionId,
+        event: event,
+        seen_by_user: false
+    });
+
+
+    return notification;
+};
+
+module.exports = {getUserEmail, getNumberOfLikes, getNumberOfDislikes, getNumberOfQuestionAnswers, getUserEmailForQuestion, addNotification, getUserIdForQuestion, getQuestionTitle};

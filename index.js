@@ -18,6 +18,9 @@ User.hasMany(Answer)
 Question.hasMany(Answer)
 User.hasMany(Like)
 Question.hasMany(Like)
+User.hasMany(Notification, {foreignKey: 'user_to_notify'});
+User.hasMany(Notification, {foreignKey: 'user_who_fired_event'});
+Question.hasMany(Notification);
 
 //process.env.PORT
 //process.env.NODE_ENV => production or undefined
@@ -38,7 +41,13 @@ app.use("/auth", require("./routes/jwtAuth"));
 app.use("/app", requireAuth, require("./routes/protectedRoutes"));
 app.use("/", require("./routes/publicRoutes"));
 
-app.get("/", (req, res) => { res.send("page")})
+app.get('/*', function(req, res) {
+    res.sendFile(path.join(__dirname, './client/public/index.html'), function(err) {
+      if (err) {
+        res.status(500).send(err)
+      }
+    })
+  })
 
 app.listen(PORT, () => {
     console.log(`server has started on port ${PORT}`);

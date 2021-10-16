@@ -1,0 +1,25 @@
+.notifications {
+    width: 100%;
+    margin-top: 3%;
+}
+
+.notifications div {
+    width: 60%;
+    margin: auto;
+    font-size: 12pt;
+    margin-top: 20px;
+    background-color: rgba(238, 238, 238, 0.377);
+}
+
+.notifications p {
+    padding: 10px 10px 10px 10px;
+    color: rgb(175, 66, 66);
+    font-weight: 600;
+}
+
+.notifications h3 {
+    width: 60%;
+    margin: auto;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}

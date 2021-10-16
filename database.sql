@@ -21,6 +21,7 @@ CREATE TABLE IF NOT EXISTS notifications (
     user_who_fired_event integer NOT NULL,
     question_id integer NOT NULL,
     seen_by_user boolean,
+    event text,
     FOREIGN KEY (question_id) REFERENCES questions (id),
     FOREIGN KEY (user_to_notify) REFERENCES users (id),
     FOREIGN KEY (user_who_fired_event) REFERENCES users (id)

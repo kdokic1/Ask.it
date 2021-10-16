@@ -9,6 +9,7 @@ const Answer = require('../models/Answer');
 const sortJsonArray = require('sort-json-array');
 const Like = require('../models/Like');
 const { getUserEmail, getNumberOfLikes, getNumberOfDislikes, getNumberOfQuestionAnswers, getUserEmailForQuestion } = require('../utils/helperFunctions');
+const Notification = require('../models/Notification');
 
 router.get("/questions", async (req, res) => {
     try {
@@ -203,5 +204,16 @@ router.get("/questionDetails/:questionId", async (req, res) => {
     }
 });
 
+router.get("/notifications", async (req, res) => {
+    try {
+        const notifications = await Notification.findAll();
+
+        
+        res.json(notifications);
+    } catch (err) {
+        console.log(err);
+        res.status(500).send("Server error");
+    }
+});
 
 module.exports = router;
